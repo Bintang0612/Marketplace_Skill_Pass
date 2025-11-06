@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('produks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_kategoris')->constrained('kategoris')->onDelete('cascade');
+            $table->foreignId('id_kategoris')->references('id')->on('kategoris');
             $table->integer('harga');
             $table->integer('stok');
             $table->text('deskripsi');
             $table->date('tanggal_upload');
-            $table->foreignId('id_tokos')->constrained('tokos')->onDelete('cascade');
+            $table->foreignId('id_tokos')->references('id')->on('tokos');
             $table->timestamps();
         });
     }

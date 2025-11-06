@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_toko');
             $table->text('deskripsi');
             $table->string('gambar');
-            $table->foreignId('users_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('id_users')->references('id')->on('users');
             $table->string('kontak_toko');
             $table->string('alamat');
             $table->timestamps();

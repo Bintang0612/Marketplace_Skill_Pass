@@ -4,7 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class produk extends Model
+class Produk extends Model
 {
     //
+    protected $guarded[
+
+    ]
 }

@@ -4,7 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class toko extends Model
+class Toko extends Model
 {
     //
+    protected $guarded[
+        
+    ]
 }
