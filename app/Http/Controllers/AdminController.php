@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 
 class AdminController extends Controller
 {
     //
     public function index(){
-        return view('admin.home');
+        return view('admin.dashboard');
     }
     public function users(){
         $data['user'] = User::all();
@@ -87,4 +88,6 @@ class AdminController extends Controller
     public function toko(){
         return view('admin.toko');
     }
+
+    
 }

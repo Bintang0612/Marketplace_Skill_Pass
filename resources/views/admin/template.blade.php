@@ -51,7 +51,7 @@
             <hr class="text-white">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item d-flex align-items-center">
-                    <a class="nav-link d-flex align-items-center" href="{{ route('home') }}">
+                    <a class="nav-link d-flex align-items-center" href="{{ route('dashboard') }}">
                         Dashboard
                     </a>
                 </li>
