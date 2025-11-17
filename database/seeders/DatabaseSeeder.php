@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Kategori;
+use App\Models\Produk;
 use App\Models\User;
+use App\Models\Toko;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 

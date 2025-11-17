@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title') - Admin</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{asset('bootstrap1/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('asset/fontawesome-free-6.7.2-web/css/all.min.css')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace</title>
+
+    {{-- Bootstrap & Font Awesome --}}
+    <link rel="stylesheet" href="{{ asset('bootstrap1/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('fontawesome-free-6.7.2-web/css/all.min.css') }}">
+
+    {{-- Font --}}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{ asset('style.css') }}">
     <link href="https://cdn.datatables.net/v/dt/dt-2.0.2/datatables.min.css" rel="stylesheet">
@@ -20,64 +25,137 @@
     <link herf="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css" rel="stylesheet">
     <link herf="https://cdn.datatables.net/responsive/3.0.0/css/responsive.bootstrap5.css" rel="stylesheet">
 
-
     <style>
         body {
-            background-color: #f8f9fa;
-        }
-        .sidebar {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F4F6F6;
+            color: #333;
+            margin: 0;
             height: 100vh;
-            background-color: #343a40;
-            position: fixed;
+            display: flex;
+            flex-direction: row;
+
         }
-        .sidebar a {
-            color: #ffffff;
-            text-decoration: none;
+
+        /* === SIDEBAR === */
+        .sidebar {
+            width: 250px;
+            background-color: #0D47A1;
+            min-height: 100vh;
+            flex-shrink: 0;
             display: block;
-            padding: 10px 20px;
+            flex-direction: column;
+            padding: 1rem;
+            position: fixed
         }
-        .sidebar a:hover {
-            background-color: #ffffff;
+
+        .sidebar h4 {
+            font-weight: 600;
+        }
+
+        .sidebar .nav-pills {
+            padding-top: 0.5rem;
+        }
+
+        .sidebar .nav-link {
+            color: #E8F5E9;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            padding: 0.6rem 0.9rem;
+            border-radius: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: background-color 0.2s;
+        }
+
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: #1E1E2F;
+            color: #fff;
+        }
+
+        .sidebar .nav-link i {
+            font-size: 1rem;
+        }
+
+        /* === MAIN WRAPPER === */
+        .main-wrapper {
+            flex: 1;
+            margin-left:250px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* === CONTENT === */
+        .content {
+            flex: 1;
+            padding: 25px;
+        }
+
+        /* Button custom */
+        .btn-primary {
+            background-color: #FF9800;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #FB8C00;
         }
     </style>
 </head>
+
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <nav class="col-md-2 sidebar d-none d-md-block">
-            <div class="py-4 text-center">
-                <h3 class="text-white">Marketplace</h3>
-            </div>
-            <hr class="text-white">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item d-flex align-items-center">
-                    <a class="nav-link d-flex align-items-center" href="{{ route('dashboard') }}">
-                        Dashboard
-                    </a>
-                </li>
-                <li class="nav-item d-flex align-items-center">
-                    <a class="nav-link d-flex align-items-center" href="{{ route('users') }}">
-                        Users
-                    </a>
-                </li>
-                <li class="nav-item d-flex align-items-center">
-                    <a class="nav-link d-flex align-items-center" href="{{ route('produk') }}">
-                        Produk
-                    </a>
-                </li>
-                <li class="nav-item d-flex align-items-center">
-                    <a class="nav-link d-flex align-items-center" href="{{ route('toko') }}">
-                        Toko
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <main class="col-md-10 ms-sm-auto px-4 py-4">
-            <h2 class="mb-4">@yield('title')</h2>
+    {{-- SIDEBAR --}}
+    <nav class="sidebar">
+        <h4 class="text-white text-center mb-4">
+            <i class="fa-solid fa-store me-2"></i> Marketplace
+        </h4>
+
+        <ul class="nav nav-pills flex-column mb-4">
+            <li class="mb-1">
+                <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{ route('admin.users') }}" class="nav-link {{ request()->routeIs('user') ? 'active' : '' }}">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{ route('admin.produk') }}" class="nav-link {{ request()->routeIs('produk') ? 'active' : '' }}">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Produk</span>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{ route('admin.kategori') }}" class="nav-link {{ request()->routeIs('admin.kategori') ? 'active' : '' }}">
+                    <i class="fa-solid fa-tags"></i>
+                    <span>Kategori</span>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{ route('admin.toko') }}" class="nav-link {{ request()->routeIs('toko') ? 'active' : '' }}">
+                    <i class="fa-solid fa-store"></i>
+                    <span>Toko</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    {{-- MAIN WRAPPER --}}
+    <div class="main-wrapper">
+
+        {{-- MAIN CONTENT --}}
+        <div class="content">
             @yield('content')
-        </main>
+        </div>
     </div>
-</div>
-<script src="{{asset('bootstrap1/js/bootstrap.bundle.min.js')}}"></script>
+
+    <script src="{{ asset('bootstrap1/js/bootstrap.bundle.min.js') }}"></script>
 </body>
 </html>

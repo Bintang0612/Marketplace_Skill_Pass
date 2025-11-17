@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('produks', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_produk');
             $table->foreignId('id_kategoris')->references('id')->on('kategoris');
             $table->integer('harga');
             $table->integer('stok');

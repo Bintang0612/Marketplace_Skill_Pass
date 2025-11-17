@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Kategori extends Model
 {
     //
-    protected $guarded[
-
-    ]
+    protected $guarded = [];
+    public function produk(){
+        return $this->hasMany(Produk::class, 'id_kategoris');
+    }
 }
