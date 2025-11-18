@@ -15,4 +15,8 @@ class Produk extends Model
     public function toko(){
         return $this->belongsTo(Toko::class, 'id_tokos');
     }
+    public function gambar_produks()
+    {
+        return $this->hasMany(gambar_produk::class,'id_produks');
+    }
 }

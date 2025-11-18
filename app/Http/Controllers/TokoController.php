@@ -49,36 +49,47 @@ class TokoController extends Controller
     }
 
 
-     public function tokoU(Request $request, $id)
-    {
-        $request->validate([
-            'nama_toko' => 'required',
-            'kontak_toko' => 'required',
-            'id_users' => 'required',
-            'alamat' => 'required',
-            'deskripsi' => 'required',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
-        ]);
+    public function tokoU(Request $request, $id)
+{
+    $request->validate([
+        'nama_toko' => 'required',
+        'kontak_toko' => 'required',
+        'id_users' => 'required',
+        'alamat' => 'required',
+        'deskripsi' => 'required',
+        'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+    ]);
 
-        $toko = Toko::findOrFail($id);
+    $toko = Toko::findOrFail($id);
 
-        if ($request->hasFile('gambar')) {
+    // Update field biasa
+    $toko->nama_toko   = $request->nama_toko;
+    $toko->kontak_toko = $request->kontak_toko;
+    $toko->id_users    = $request->id_users;
+    $toko->alamat      = $request->alamat;
+    $toko->deskripsi   = $request->deskripsi;
 
-            // hapus gambar lama
-            $oldPath = public_path('public/foto-toko/'.$toko->gambar);
-            if(File::exists($oldPath)){ File::delete($oldPath); }
+    // Update gambar jika ada
+    if ($request->hasFile('gambar')) {
 
-            $file = $request->file('gambar');
-            $namaFile = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('public/foto-toko'), $namaFile);
-
-            $toko->gambar = $namaFile;
+        // hapus gambar lama
+        $oldPath = public_path('public/foto-toko/'.$toko->gambar);
+        if(File::exists($oldPath)){
+            File::delete($oldPath);
         }
 
-        $toko->update($request->all());
+        $file = $request->file('gambar');
+        $namaFile = time().'_'.$file->getClientOriginalName();
+        $file->move(public_path('public/foto-toko'), $namaFile);
 
-        return redirect()->back()->with('success', 'Toko berhasil diperbarui');
+        $toko->gambar = $namaFile;
     }
+
+    $toko->save();
+
+    return redirect()->back()->with('success', 'Toko berhasil diperbarui');
+}
+
 
     public function tokoD($id){
        try{

@@ -26,7 +26,7 @@ Route::middleware(['admin'])->group(function () {
 
     Route::get('/admin/toko', [TokoController::class, 'toko'])->name('admin.toko');
     Route::post('/admin/toko/create', [TokoController::class, 'tokoS'])->name('toko.store');
-    Route::post('/admin/toko/update/{id}', [TokoController::class, 'tokoU'])->name('toko.update');
+    Route::put('/admin/toko/update/{id}', [TokoController::class, 'tokoU'])->name('toko.update');
     Route::get('/admin/toko/delete/{id}', [TokoController::class, 'tokoD'])->name('toko.delete');
 
     Route::get('/admin/kategori', [KategoriController::class, 'kategori'])->name('admin.kategori');

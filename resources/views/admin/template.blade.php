@@ -110,25 +110,25 @@
     {{-- SIDEBAR --}}
     <nav class="sidebar">
         <h4 class="text-white text-center mb-4">
-            <i class="fa-solid fa-store me-2"></i> Marketplace
+            <i class="fa-solid fa-shop me-2"></i> Marketplace
         </h4>
 
         <ul class="nav nav-pills flex-column mb-4">
             <li class="mb-1">
                 <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                    <i class="fa-solid fa-chart-line"></i>
+                    <i class="fa-solid fa-align-justify"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="mb-1">
                 <a href="{{ route('admin.users') }}" class="nav-link {{ request()->routeIs('user') ? 'active' : '' }}">
-                    <i class="fa-solid fa-users"></i>
+                    <i class="fa-solid fa-user"></i>
                     <span>Users</span>
                 </a>
             </li>
             <li class="mb-1">
                 <a href="{{ route('admin.produk') }}" class="nav-link {{ request()->routeIs('produk') ? 'active' : '' }}">
-                    <i class="fa-solid fa-utensils"></i>
+                    <i class="fa-brands fa-product-hunt"></i>
                     <span>Produk</span>
                 </a>
             </li>
@@ -140,7 +140,7 @@
             </li>
             <li class="mb-1">
                 <a href="{{ route('admin.toko') }}" class="nav-link {{ request()->routeIs('toko') ? 'active' : '' }}">
-                    <i class="fa-solid fa-store"></i>
+                    <i class="fa-solid fa-shop"></i>
                     <span>Toko</span>
                 </a>
             </li>

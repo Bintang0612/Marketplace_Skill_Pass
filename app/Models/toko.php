@@ -10,6 +10,6 @@ class Toko extends Model
     protected $guarded = [];
 
     public function user(){
-        return $this->belongsto(User::class, 'users_id');
+        return $this->belongsto(User::class, 'id_users');
     }
 }

@@ -33,6 +33,7 @@
                             <th>Deskripsi</th>
                             <th>Tanggal Upload</th>
                             <th>Kategori</th>
+                            <th>Toko</th>
                             <th>Gambar</th>
                             <th style="width: 150px;">Aksi</th>
                         </tr>
@@ -46,12 +47,12 @@
                             <td>{{ $item->stok }}</td>
                             <td>{{ $item->deskripsi }}</td>
                             <td>{{ $item->tanggal_upload }}</td>
-                            <td>{{ $item->id_kategoris->nama_kategori }}</td>
-                            <td>{{ $item->id_tokos->nama_toko }}</td>
+                            <td>{{ $item->kategori->nama_kategori }}</td>
+                            <td>{{ $item->toko->nama_toko }}</td>
                             <td>
                                 <div class="d-flex flex-wrap">
                                     @foreach ($item->gambar_produks as $g)
-                                        <img src="{{ asset('storage'.$g->gambar) }}" alt="" width="60" class="me-1 mb-1 rounded">
+                                        <img src="{{ asset('public/foto-produk/'.$g->nama_gambar) }}" alt="" width="60" class="me-1 mb-1 rounded">
                                     @endforeach
                                 </div>
                             </td>
@@ -65,12 +66,9 @@
 
                                 <!-- DELETE -->
                                 <form action="{{ route('produk.delete', $item->id) }}"
-                                      method="POST"
                                       class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
                                     <button onclick="return confirm('Hapus produk ini?')"
-                                            class="btn btn-sm btn-outline-danger">
+                                        class="btn btn-sm btn-outline-danger">
                                         <i class="fa fa-trash"></i> Delete
                                     </button>
                                 </form>
@@ -87,18 +85,19 @@
                                         <button class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
 
-                                    <form action="{{ route('produk.update', $item->id) }}" method="POST">
+                                    <form action="{{ route('produk.update', $item->id) }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @method('POST')
 
                                         <div class="modal-body">
+
+                                            <input type="hidden" name="id" value="{{ $item->id }}">
 
                                             <div class="mb-3">
                                                 <label>Nama Produk</label>
                                                 <input type="text" name="nama_produk" class="form-control"
                                                        value="{{ $item->nama_produk }}" required>
                                             </div>
-
                                             <div class="mb-3">
                                                 <label>Harga</label>
                                                 <input type="number" name="harga" class="form-control"
@@ -112,9 +111,9 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <label>Toko</label>
-                                                <select name="id_users" class="form-control" required>
-                                                    <option value="">-- pilih user --</option>
+                                                <label>Kategori</label>
+                                                <select name="id_kategoris" class="form-control" required>
+                                                    <option value="">-- pilih kategori --</option>
                                                     @foreach($kategori as $k)
                                                     <option value="{{ $k->id }}">{{ $k->nama_kategori }}</option>
                                                     @endforeach
@@ -122,7 +121,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label>Toko</label>
-                                                <select name="id_toko" class="form-control" required>
+                                                <select name="id_tokos" class="form-control" required>
                                                     <option value="">-- pilih toko --</option>
                                                     @foreach($toko as $t)
                                                     <option value="{{ $t->id }}">{{ $t->nama_toko }}</option>
@@ -132,6 +131,10 @@
                                             <div class="mb-3">
                                                 <label>Deskripsi</label>
                                                 <textarea name="deskripsi" class="form-control" rows="3">{{ $item->deskripsi }}</textarea>
+                                            </div>
+                                            <div class="mt-3 mb-3">
+                                                <label for="gambar" class="form-label">Gambar</label>
+                                                <input type="file" name="gambar" id="gambar" class="form-control" min="0">
                                             </div>
 
                                         </div>
@@ -162,12 +165,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
 
-            <div class="modal-header bg-warning">
+            <div class="modal-header bg-primary">
                 <h5 class="modal-title">Tambah Produk</h5>
                 <button class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <form action="{{ route('produk.store') }}" method="POST">
+            <form action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="modal-body">
@@ -175,11 +178,6 @@
                     <div class="mb-3">
                         <label>Nama Produk</label>
                         <input type="text" name="nama_produk" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label>Deskripsi</label>
-                        <textarea name="deskripsi" class="form-control" rows="3"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -193,22 +191,27 @@
                     </div>
 
                     <div class="mb-3">
-                        <label>Toko</label>
-                        <select name="id_users" class="form-control" required>
+                        <label>Kategori</label>
+                        <select name="id_kategoris" class="form-control" required>
                             <option value="">-- kategori --</option>
                             @foreach($kategori as $k)
                             <option value="{{ $k->id }}">{{ $k->nama_kategori }}</option>
                             @endforeach
                         </select>
                     </div>
+
                     <div class="mb-3">
                         <label>Toko</label>
-                        <select name="id_toko" class="form-control" required>
+                        <select name="id_tokos" class="form-control" required>
                             <option value="">-- toko --</option>
                             @foreach($toko as $t)
                             <option value="{{ $t->id }}">{{ $t->nama_toko }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Deskripsi</label>
+                        <textarea name="deskripsi" class="form-control" rows="3"></textarea>
                     </div>
                     <div class="mt-3 mb-3">
                         <label for="gambar" class="form-label">Gambar</label>

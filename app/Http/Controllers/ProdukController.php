@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gambar_produk;
 use App\Models\Kategori;
 use App\Models\Produk;
 use App\Models\Toko;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {
@@ -17,38 +19,103 @@ class ProdukController extends Controller
         return view('admin.produk', $data);
     }
     public function produkS(Request $request){
-        $validate = $request->validate([
-            'id_kategoris' => 'required',
-            'harga' => 'required|numeric',
-            'stok' => 'required',
-            'deskripsi' => 'required',
-            'tanggal_upload' => 'required|date',
-            'id_tokos' => 'required',
+        $request->validate([
+        'id_kategoris' => 'required',
+        'id_tokos' => 'required',
+        'nama_produk' => 'required|max:50',
+        'deskripsi' => 'required',
+        'harga' => 'required|integer',
+        'stok' => 'required|integer',
+        'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+    ]);
+
+    $produk = Produk::create([
+        'id_kategoris' => $request->id_kategoris,
+        'id_tokos' => $request->id_tokos,
+        'nama_produk' => $request->nama_produk,
+        'deskripsi' => $request->deskripsi,
+        'harga' => $request->harga,
+        'stok' => $request->stok,
+        'tanggal_upload' => now(),
+    ]);
+
+    // proses upload gambar
+    $namaFile = null;
+    if ($request->hasFile('gambar')) {
+        $namaFile = time() . '.' . $request->gambar->extension();
+        $request->gambar->move(public_path('public/foto-produk'), $namaFile);
+
+        Gambar_produk::create([
+            'id_produks' => $produk->id,
+            'nama_gambar' => $namaFile,
         ]);
+    }
 
-        $produk = Produk::create([
-            'id_kategoris' => $validate['id_kategoris'],
-            'harga' => $validate['harga'],
-            'stok' => $validate['stok'],
-            'deskripsi' => $validate['deskripsi'],
-            'tanggal_upload' => now(),
-            'id_tokos' => $validate['id_tokos'],
-        ]);
+    return back()->with('success', 'Produk berhasil ditambahkan!');
+    }
 
-        if ($request->hasFile('gambar')) {
-            foreach ($request->file('gambar') as $index => $file) {
-                $namaProduk = str_replace(' ', '_', strtolower($produk->nama_produk));
-                $namaFile = $namaProduk . '' . time() . '' . $index . '.' . $file->getClientOriginalExtension();
+    public function produkU(Request $request, $id)
+{
+    $produk = Produk::findOrFail($id);
 
-                $path = $file->storeAs('foto-produk', $namaFile, 'public');
+    $request->validate([
+        'id_kategoris' => 'required',
+        'id_tokos' => 'required',
+        'nama_produk' => 'required|max:50',
+        'deskripsi' => 'required',
+        'harga' => 'required|integer',
+        'stok' => 'required|integer',
+        'gambar.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+    ]);
 
-                gambar_produk::create([
-                    'id_produks' => $produk->id,
-                    'gambar' => $path,
-                ]);
+    $produk->update([
+        'id_kategoris' => $request->id_kategoris,
+        'id_tokos' => $request->id_tokos,
+        'nama_produk' => $request->nama_produk,
+        'deskripsi' => $request->deskripsi,
+        'harga' => $request->harga,
+        'stok' => $request->stok,
+    ]);
+
+    // === HAPUS GAMBAR LAMA ===
+    if ($request->hasFile('gambar')) {
+
+        $gambarLama = Gambar_produk::where('id_produks', $produk->id)->get();
+
+        foreach ($gambarLama as $gmbr) {
+            if (file_exists(storage_path('app/' . $gmbr->nama_gambar))) {
+                unlink(storage_path('app/' . $gmbr->nama_gambar));
             }
+            $gmbr->delete();
         }
 
-        return redirect()->route('admin.produk')->with('success', 'produk berhasil  ditambahkan');
+        // === SIMPAN GAMBAR BARU ===
+        if ($request->hasFile('gambar')) {
+        $namaFile = time() . '.' . $request->gambar->extension();
+        $request->gambar->move(public_path('public/foto-produk'), $namaFile);
+
+        Gambar_produk::create([
+            'id_produks' => $produk->id,
+            'nama_gambar' => $namaFile,
+        ]);
+    }
+    }
+
+    return back()->with('success', 'Produk berhasil diperbarui!');
+}
+
+
+    public function produkD($id)
+    {
+        $produk = Produk::with('gambar_produks')->findOrFail($id);
+
+        foreach ($produk->gambar_produks as $g) {
+            Storage::disk('public')->delete($g->gambar);
+            $g->delete();
+        }
+
+        $produk->delete();
+
+        return back()->with('success', 'Produk dan gambarnya berhasil dihapus!');
     }
 }

@@ -76,7 +76,7 @@
                                         </div>
 
                                         <div class="modal-footer">
-                                            <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                                             <button class="btn btn-primary" type="submit">Update</button>
                                         </div>
                                     </form>
@@ -102,7 +102,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
 
-            <div class="modal-header bg-warning">
+            <div class="modal-header bg-primary">
                 <h5 class="modal-title">Tambah Kategori</h5>
                 <button class="btn-close" data-bs-dismiss="modal"></button>
             </div>
@@ -119,7 +119,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                     <button class="btn btn-warning" type="submit">Simpan</button>
                 </div>
 

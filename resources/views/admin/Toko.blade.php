@@ -41,11 +41,11 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->nama_toko }}</td>
                         <td>{{ $item->kontak_toko }}</td>
-                        <td>{{ $item->id_users }}</td>
+                        <td>{{ $item->user->nama }}</td>
                         <td>{{ $item->alamat }}</td>
                         <td>{{ $item->deskripsi }}</td>
                         <td>
-                        <img src="{{ asset('storage/foto-toko/'.$item->gambar) }}" alt="" width="100" height="100">
+                        <img src="{{ asset('public/foto-toko/'.$item->gambar) }}" alt="" width="100" height="100">
                         </td>
                         <td>
                             <a href="{{route('toko.delete',Crypt::encrypt($item->id))}}"
@@ -66,13 +66,14 @@
                     {{-- MODAL EDIT --}}
                     <div class="modal fade" id="editTokoModal{{ $item->id }}">
                         <div class="modal-dialog">
-                            <form method="POST" action="{{ route('toko.update', Crypt::encrypt($item->id)) }}">
+                            <form method="POST" action="{{ route('toko.update', $item->id) }}" enctype="multipart/form-data">
                                 @csrf
-                                @method('POST')
+                                @method('PUT')
 
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary text-white">
                                         <h5>Edit Toko</h5>
+                                        <button class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
 
                                     <div class="modal-body">
@@ -81,6 +82,13 @@
 
                                         <label>Kontak Toko</label>
                                         <input type="text" name="kontak_toko" class="form-control" value="{{ $item->kontak_toko }}" required>
+
+                                        <label>Owner</label>
+                                        <select name="id_users" class="form-control" required>
+                                            @foreach($users as $u)
+                                            <option value="{{ $u->id }}" {{ $u->id == $item->id_users ? 'selected' : '' }}>{{ $u->nama }}</option>
+                                            @endforeach
+                                        </select>
 
                                         <label class="mt-2">Alamat</label>
                                         <input type="text" name="alamat" class="form-control" value="{{ $item->alamat }}" required>
@@ -93,8 +101,8 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                        <button class="btn btn-primary">Simpan Perubahan</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                                     </div>
                                 </div>
                             </form>
@@ -114,7 +122,7 @@
         <form method="POST" action="{{ route('toko.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="modal-content">
-                <div class="modal-header bg-warning">
+                <div class="modal-header bg-primary">
                     <h5>Tambah Toko</h5>
                 </div>
 
@@ -156,7 +164,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button class="btn btn-warning">Tambah</button>
                 </div>
 
