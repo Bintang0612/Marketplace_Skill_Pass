@@ -107,14 +107,7 @@ class ProdukController extends Controller
 
     public function produkD($id)
     {
-        $produk = Produk::with('gambar_produks')->findOrFail($id);
-
-        foreach ($produk->gambar_produks as $g) {
-            Storage::disk('public')->delete($g->gambar);
-            $g->delete();
-        }
-
-        $produk->delete();
+        Produk::where('id', $id)->delete();
 
         return back()->with('success', 'Produk dan gambarnya berhasil dihapus!');
     }

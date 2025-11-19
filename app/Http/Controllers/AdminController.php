@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gambar_produk;
 use App\Models\Kategori;
 use App\Models\Produk;
 use App\Models\Toko;
@@ -26,21 +27,21 @@ class AdminController extends Controller
         return view('admin.users', $data);
     }
     public function usersP(Request $request){
-        $validate = $request->validate([
+            $request->validate([
             'nama' => 'required|string',
             'kontak' => 'required|numeric|max:13',
             'username' => 'required|string',
             'password' => 'required',
             'role' => 'required',
         ]);
-        $validate['password'] = bcrypt($validate['password']);
+        $request['password'] = bcrypt($request['password']);
 
         User::create([
-            'nama' => $validate['nama'],
-            'kontak' => $validate['kontak'],
-            'username' => $validate['username'],
-            'password' => $validate['password'],
-            'role' => $validate['role'],
+            'nama' => $request->nama,
+            'kontak' => $request->kontak,
+            'username' => $request->username,
+            'password' => $request->password,
+            'role' => $request->role,
         ]);
         return redirect()->route('admin.users')->with('success', 'tambah user berhasil');
     }
@@ -73,7 +74,12 @@ class AdminController extends Controller
             return redirect()->back();
         }
 
-        User::where('id',$id)->delete();
+        Gambar_produk::whereHas('produk', function ($query) use ($id) {
+            $query->where('id_tokos', $id);
+        });
+        Produk::where('id_tokos', $id)->delete();
+        Toko::where('id_users', $id)->delete();
+        User::find($id)->delete();
         return redirect()->back()->with('success', 'data berhasil dihapus');
     }
 }

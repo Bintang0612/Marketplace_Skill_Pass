@@ -1,103 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('bootstrap1/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('fontawesome-free-6.7.2-web/css/all.min.css') }}">
+
     <style>
-        body{
-            font-family: 'open sans', sans-serif;
+        body {
+            font-family: 'Open Sans', sans-serif;
         }
-        .navbar{
-            transition: all .4s ease-in-out;
-            height: 5rem;
+
+        /* Navbar modern */
+        .navbar {
+            padding: 0.8rem 0;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.85) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
-        .navbar-background{
-            background-color: #ffffff;
+
+        .navbar-brand {
+            font-size: 28px;
+            font-weight: 800;
+            color: #111;
+            letter-spacing: 0.5px;
         }
-        .navbar .nav-link{
-            color: #222;
-            font-weight: 500;
-            transition: color 0.3 ease;
+
+        .nav-link {
+            font-size: 20px;
+            font-weight: 600;
+            color: #222 !important;
+            padding: 8px 18px !important;
+            transition: 0.2s ease-in-out;
         }
-        .navbar .nav-link:hover{
-            color: #007bff;
+
+        .nav-link:hover {
+            color: #007bff !important;
         }
-        .navbar .navbar-brand{
-            color: #222
+
+        /* Footer */
+        footer {
+            margin-top: 60px;
+        }
+
+        footer h5 {
             font-weight: 700;
-            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        footer a:hover {
+            color: #0d6efd !important;
         }
     </style>
 </head>
+
 <body>
-    <nav id="mainNav" class="navbar navbar-expand-lg fixed-top navbar-background">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg">
         <div class="container">
-            {{-- <img src="{{ asset('storage/foto-sekolah/smpn-1-sukarame1-removebg-preview.png') }}" alt="logo" width="50" class="me-2"> --}}
-            <a href="/" class="navbar-brand fw-bold">Marketplace</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
-            <span class="navbar-toggler-icon"></span>
+
+            <!-- Brand kiri -->
+            <a class="navbar-brand" href="/">Marketplace</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
             </button>
-            <div id="nav" class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item "><a class="nav-link" href="{{ route('home') }}">Beranda</a></li>
+
+            <div class="collapse navbar-collapse" id="navmenu">
+
+                <!-- Menu Tengah -->
+                <ul class="navbar-nav mx-auto text-center">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Beranda</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Produk</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Kategori</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Toko</a></li>
+                </ul>
+
+                <!-- User Kanan -->
+                <div class="d-flex align-items-center">
+
                     @if (Auth::check())
-                    <li class="nav-item"><a class="nav-link" href="{{route('logout')}}">Logout</a></li>
+                        <span class="me-3 fw-semibold" style="font-size: 18px;">
+                            {{ Auth::user()->nama }}
+                        </span>
+
+                        <div class="dropdown">
+                            <a href="#" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-circle-user text-dark" style="font-size: 32px;"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li class="d-flex align-items-center ps-3 py-2">
+                                    <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                    <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
                     @else
-                    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                        <a class="btn btn-primary px-4 py-2" style="font-size: 18px;" href="{{ route('login') }}">Login</a>
                     @endif
-                 </ul>
+
+                </div>
+
             </div>
         </div>
     </nav>
 
-    <main class="mt-5">
-    @yield('content')
+    <!-- CONTENT -->
+    <main class="mt-4">
+        @yield('content')
     </main>
-    <!-- Footer -->
-<footer class="bg-dark text-light pt-4">
-  <div class="container">
-    <div class="row">
-      <!-- Kolom 1: Tentang -->
-      <div class="col-md-4 mb-3">
-        <h5>About Us</h5>
-        <p>
-          Website marketplace
-        </p>
-      </div>
 
-      <!-- Kolom 2: Link -->
-      <div class="col-md-4 mb-3">
-        <h5>Quick Links</h5>
-        <ul class="list-unstyled">
-          <li><a href="#" class="text-light text-decoration-none">Beranda</a></li>
-          <li><a href="#" class="text-light text-decoration-none">Profuk</a></li>
-          <li><a href="#" class="text-light text-decoration-none">Kategori</a></li>
-        </ul>
-      </div>
+    <!-- FOOTER -->
+    <footer class="bg-dark text-light pt-4">
+        <div class="container">
+            <div class="row">
 
-      <!-- Kolom 3: Kontak -->
-      <div class="col-md-4 mb-3">
-        <h5>Contact</h5>
-        <p>
-          📍 Jl. Lapang Bola No. 117, SUKARAME, Kec. Sukarame, Kab. Tasikmalaya, Jawa Barat<br>
-          📞 0265545483<br>
-          ✉️ Marketplace@yahoo.co.id
-        </p>
-      </div>
-    </div>
+                <!-- Tentang -->
+                <div class="col-md-4 mb-3">
+                    <h5>About Us</h5>
+                    <p>Website marketplace modern dan mudah digunakan.</p>
+                </div>
 
-    <!-- Copyright -->
-    <div class="text-center py-3 border-top border-secondary mt-3">
-      <small>© 2025 Marketplace. All rights reserved.</small>
-    </div>
-  </div>
-</footer>
+                <!-- Quick Links -->
+                <div class="col-md-4 mb-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light text-decoration-none">Beranda</a></li>
+                        <li><a href="#" class="text-light text-decoration-none">Produk</a></li>
+                        <li><a href="#" class="text-light text-decoration-none">Kategori</a></li>
+                    </ul>
+                </div>
 
+                <!-- Kontak -->
+                <div class="col-md-4 mb-3">
+                    <h5>Contact</h5>
+                    <p>
+                        📍 Jl. Lapang Bola No. 117, Tasikmalaya<br>
+                        📞 0265-545483<br>
+                        ✉️ Marketplace@yahoo.co.id
+                    </p>
+                </div>
 
+            </div>
+
+            <div class="text-center py-3 border-top border-secondary mt-3">
+                <small>© 2025 Marketplace. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="{{ asset('bootstrap1/js/bootstrap.bundle.min.js') }}"></script>
 </body>
+
 </html>

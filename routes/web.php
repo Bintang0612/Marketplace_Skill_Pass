@@ -1,15 +1,14 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TokoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('member.home');
-})->name('home');
+Route::get('/',[HomeController::class, 'index'])->name('home');
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('dashboard');
@@ -37,7 +36,7 @@ Route::middleware(['admin'])->group(function () {
 });
 
 Route::middleware(['member'])->group(function(){
-    
+
 });
 
 Route::get('/login', [UserController::class, 'login'])->name('login');

@@ -4,8 +4,8 @@
 <style>
     /* background Section */
     .background-header {
-        background: url('{{ asset('storage/foto-guru/IMG-20230614-WA0076.jpg') }}') center/cover no-repeat;
-        min-height: 50vh;
+        background: url('{{ asset('public/foto/img.jpg') }}') center/cover no-repeat;
+        min-height: 80vh;
         display: flex;
         align-items: center;
         color: #fff;
@@ -45,30 +45,43 @@
 
 <div class="container py-5 text-center">
     <h2 class="text-teal mb-4 py-3">Produk Terbaru</h2>
+    <div class="container pb-5">
+        <div class="row g-4">
 
-    <div class="row g-4 mt-3 justify-content-center">
-      <!-- Card 1 -->
-        {{-- @foreach ($berita as $item)
-        <div class="col-12 col-mb-6 col-lg-3 d-flex gap-3">
-            <div class="card h-100 shadow-sm border-2"
-            style="width: 400px">
-                <img src="{{ asset('storage/foto-berita/'.$item->foto) }}" class="card-img-top" alt=""
-                style="height: 200px; object-fit: cover;">
-                <div class="card-body">
-                    <h2 class="card-title ">{{ $item->judul }}</h2>
-                    <p class="card-text text-muted">{{ $item->isi }}</p>
-                    <small class="text-muted mb-2" style="font-size: 12px">
-                        <i class="far fa-calendar me-1"></i>
-                        {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}
-                    </small>
-                </div>
-                <div class="d-flex justify-content-center mb-3">
-                    <button class="text-center text-white" style="border-radius: 10px; background-color: blue; width: 75%;" >Baca Selengkapnya</button>
+            @foreach ($produks as $produk)
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card shadow-sm h-100">
+
+                    <!-- Foto Produk -->
+                    @foreach ($produk->gambar_produks as $g)
+                        <img src="{{ asset('public/foto-produk/'.$g->nama_gambar) }}" alt="" width="60" class="card-img-top"
+                        style="height: 200px; object-fit: cover;">
+                    @endforeach
+
+                    <div class="card-body">
+                        <!-- Nama Produk -->
+                        <h5 class="card-title">{{ $produk->nama_produk }}</h5>
+
+                        <!-- Harga -->
+                        <p class="text-teal fw-bold fs-5">Rp {{ number_format($produk->harga, 0, ',', '.') }}</p>
+
+                        <!-- Stok -->
+                        <p class="text-muted mb-2">Stok: {{ $produk->stok }}</p>
+
+                        <!-- Tombol -->
+                        <a href="#"
+                        class="btn btn-primary w-100">
+                            Lihat Detail
+                        </a>
+                    </div>
+
                 </div>
             </div>
+            @endforeach
+
         </div>
-        @endforeach --}}
     </div>
+
 </div>
 
 @endsection
