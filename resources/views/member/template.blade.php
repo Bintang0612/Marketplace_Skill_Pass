@@ -12,6 +12,7 @@
         }
         .navbar{
             transition: all .4s ease-in-out;
+            height: 5rem;
         }
         .navbar-background{
             background-color: #ffffff;
@@ -45,7 +46,7 @@
                     <li class="nav-item"><a class="nav-link" href="#">Produk</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Kategori</a></li>
                     @if (Auth::check())
-                    <li class="nav-item"><a class="nav-link" href="{{route('logout.member')}}">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{route('logout')}}">Logout</a></li>
                     @else
                     <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
                     @endif

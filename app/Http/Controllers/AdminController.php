@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
+use App\Models\Produk;
+use App\Models\Toko;
 use App\Models\User;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
@@ -12,7 +15,11 @@ class AdminController extends Controller
 {
     //
     public function index(){
-        return view('admin.dashboard');
+        $data['user'] = User::all();
+        $data['produk'] = Produk::all();
+        $data['kategori'] = Kategori::all();
+        $data['toko'] = Toko::all();
+        return view('admin.dashboard', $data);
     }
     public function users(){
         $data['user'] = User::all();

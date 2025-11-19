@@ -144,6 +144,12 @@
                     <span>Toko</span>
                 </a>
             </li>
+            <li class="mb-1 ms-1">
+                <a href="{{ route('logout') }}" class="nav-link" style="background-color: red">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
         </ul>
     </nav>
 

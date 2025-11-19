@@ -33,11 +33,13 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/kategori/store', [KategoriController::class, 'kategoriS'])->name('kategori.store');
     Route::post('/admin/kategori/update/{id}', [KategoriController::class, 'kategoriU'])->name('kategori.update');
     Route::get('/admin/kategori/delete/{id}', [KategoriController::class, 'kategoriD'])->name('kategori.delete');
+
 });
 
 Route::middleware(['member'])->group(function(){
-    Route::get('/member/logout', [UserController::class, 'logoutM'])->name('logout.member');
+    
 });
 
 Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/login/auth', [UserController::class, 'auth'])->name('login.auth');
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');

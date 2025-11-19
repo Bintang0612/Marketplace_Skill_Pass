@@ -25,7 +25,7 @@ class UserController extends Controller
             }
         }
     }
-    public function logoutM(){
+    public function logout(){
         Auth::logout();
         return redirect()->route('home');
     }
