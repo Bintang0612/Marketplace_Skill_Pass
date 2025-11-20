@@ -100,4 +100,10 @@ class TokoController extends Controller
         Toko::where('id', $id)->delete();
         return redirect()->back()->with('error', 'toko berhasil dihapus');
     }
+
+    public function detailT($id){
+        $toko = Toko::with('produk')->findOrFail($id);
+        return view('member.toko-detail', compact('toko'));
+    }
+
 }

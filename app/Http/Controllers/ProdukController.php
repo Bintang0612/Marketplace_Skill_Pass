@@ -111,4 +111,9 @@ class ProdukController extends Controller
 
         return back()->with('success', 'Produk dan gambarnya berhasil dihapus!');
     }
+
+    public function detailP($id){
+        $produk = Produk::findOrFail($id);
+        return view('member.produk-detail', compact('produk'));
+    }
 }

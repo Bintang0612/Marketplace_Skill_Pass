@@ -45,7 +45,7 @@
                         <td>{{ $item->alamat }}</td>
                         <td>{{ $item->deskripsi }}</td>
                         <td>
-                        <img src="{{ asset('public/foto-toko/'.$item->gambar) }}" alt="" width="100" height="100">
+                        <img src="{{ asset('storage/foto-toko/'.$item->gambar) }}" alt="" width="100" height="100">
                         </td>
                         <td>
                             <a href="{{route('toko.delete',Crypt::encrypt($item->id))}}"

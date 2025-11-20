@@ -8,8 +8,6 @@ use App\Http\Controllers\TokoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/',[HomeController::class, 'index'])->name('home');
-
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
@@ -38,6 +36,14 @@ Route::middleware(['admin'])->group(function () {
 Route::middleware(['member'])->group(function(){
 
 });
+
+Route::get('/',[HomeController::class, 'index'])->name('home');
+
+Route::get('/toko', [HomeController::class, 'toko'])->name('toko');
+Route::get('/toko/{id}', [TokoController::class, 'detailT'])->name('toko.detail');
+
+Route::get('/produk', [HomeController::class, 'produk'])->name('produk');
+Route::get('/produk/{id}', [ProdukController::class, 'detailP'])->name('produk.detail');
 
 Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/login/auth', [UserController::class, 'auth'])->name('login.auth');
