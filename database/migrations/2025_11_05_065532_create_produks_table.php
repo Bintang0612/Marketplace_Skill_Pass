@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('stok');
             $table->text('deskripsi');
             $table->date('tanggal_upload');
-            $table->foreignId('id_tokos')->references('id')->on('tokos');
+            $table->foreignId('id_tokos')->constrained('tokos')->onDelete('cascade');
             $table->timestamps();
         });
     }

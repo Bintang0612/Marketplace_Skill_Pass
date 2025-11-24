@@ -52,7 +52,7 @@
                             <td>
                                 <div class="d-flex flex-wrap">
                                     @foreach ($item->gambar_produks as $g)
-                                        <img src="{{ asset('public/foto-produk/'.$g->nama_gambar) }}" alt="" width="60" class="me-1 mb-1 rounded">
+                                        <img src="{{ asset('storage/foto-produk/'.$g->nama_gambar) }}" alt="" width="60" class="me-1 mb-1 rounded">
                                     @endforeach
                                 </div>
                             </td>

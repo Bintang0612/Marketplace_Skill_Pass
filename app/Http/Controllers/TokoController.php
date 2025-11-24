@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use App\Models\Toko;
 use App\Models\User;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
 
@@ -104,6 +106,84 @@ class TokoController extends Controller
     public function detailT($id){
         $toko = Toko::with('produk')->findOrFail($id);
         return view('member.toko-detail', compact('toko'));
+    }
+
+    public function tokoSaya(){
+        $toko = Toko::where('id_users', Auth::id())->with('produk.gambar_produks')->first();
+        $kategori = Kategori::all();
+        return view('member.toko-saya', compact('toko', 'kategori'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama_toko' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'kontak_toko' => 'required|string|max:20',
+            'alamat' => 'required|string|max:500',
+            'gambar' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        // Cek apakah user sudah memiliki toko
+        if (Toko::where('id_users', Auth::id())->exists()) {
+            return redirect()->back()->with('error', 'Anda sudah memiliki toko.');
+        }
+
+        // Upload gambar
+        if ($request->hasFile('gambar')) {
+            $filename = time() . '_' . $request->file('gambar')->getClientOriginalName();
+            $request->file('gambar')->storeAs('public/foto-toko', $filename);
+        }
+
+        // Simpan data toko
+        Toko::create([
+            'nama_toko' => $request->nama_toko,
+            'deskripsi' => $request->deskripsi,
+            'kontak_toko' => $request->kontak_toko,
+            'alamat' => $request->alamat,
+            'gambar' => $filename,
+            'id_users' => Auth::id(),
+        ]);
+
+        return redirect()->back()->with('success', 'Toko berhasil dibuat.');
+    }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama_toko' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'kontak_toko' => 'required|string|max:20',
+            'alamat' => 'required|string|max:500',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $toko = Toko::findOrFail($id);
+
+        // Update field biasa
+        $toko->nama_toko   = $request->nama_toko;
+        $toko->deskripsi   = $request->deskripsi;
+        $toko->kontak_toko = $request->kontak_toko;
+        $toko->alamat      = $request->alamat;
+
+        // Update gambar jika ada
+        if ($request->hasFile('gambar')) {
+
+            // hapus gambar lama
+            $oldPath = public_path('public/foto-toko/'.$toko->gambar);
+            if(File::exists($oldPath)){
+                File::delete($oldPath);
+            }
+
+            $file = $request->file('gambar');
+            $namaFile = time().'_'.$file->getClientOriginalName();
+            $file->move(public_path('storage/foto-toko'), $namaFile);
+
+            $toko->gambar = $namaFile;
+        }
+
+        $toko->save();
+
+        return redirect()->back()->with('success', 'Toko berhasil diperbarui.');
     }
 
 }

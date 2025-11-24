@@ -14,7 +14,6 @@
                 <img src="{{ asset('storage/foto-toko/'.$item->gambar) }}"
                      alt="Gambar Toko"
                      style="height: 200px; object-fit: cover; border-radius: 5px;">
-
                 <div class="card-body">
 
                     {{-- NAMA TOKO --}}

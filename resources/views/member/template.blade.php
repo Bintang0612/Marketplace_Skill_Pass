@@ -74,7 +74,6 @@
                 <ul class="navbar-nav mx-auto text-center">
                     <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Beranda</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('produk') }}">Produk</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Kategori</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('toko') }}">Toko</a></li>
                 </ul>
 
@@ -85,7 +84,7 @@
                         type="search"
                         name="search"
                         placeholder="Cari produk..."
-                        style="width: 220px;"
+                        style="width: 350px;"
                         value="{{ request('search') }}"
                     >
                     <button class="btn btn-outline-primary ms-2" type="submit">
@@ -107,7 +106,8 @@
                                 <i class="fa-solid fa-circle-user text-dark" style="font-size: 32px;"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a href="#" class="dropdown-item">Toko Saya</a></li>                            <li><hr class="dropdown-dvider"></li>
+                            <li><a href="{{ route('toko.saya', Auth::user()->id) }}" class="dropdown-item">Toko Saya</a></li>
+                            <li><hr class="dropdown-dvider"></li>
                             <li class="d-flex align-items-center ps-2">
                                 <i class="fa-solid fa-right-from-bracket"></i>
                                 <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>

@@ -44,12 +44,14 @@
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="card shadow-sm h-100">
                         <!-- Foto Produk -->
-                        @foreach ($produk->gambar_produks as $g)
-                            <img src="{{ asset('public/foto-produk/' . $g->nama_gambar) }}"
-                                 class="card-img-top"
-                                 style="height: 200px; object-fit: cover;"
-                                 alt="gambar produk">
-                        @endforeach
+                        @php
+                        $gambar = $produk->gambar_produks->first();
+                        @endphp
+                        <div style="width: 100%; height: 180px; overflow: hidden;">
+                            <img src="{{ $gambar ? asset('storage/foto-produk/'.$gambar->nama_gambar) : asset('noimage.png') }}"
+                            class="w-100 h-100" style="object-fit: cover;">
+                        </div>
+
                         <div class="card-body">
                             <h5 class="card-title">{{ $produk->nama_produk }}</h5>
                             <p class="text-teal fw-bold fs-5">

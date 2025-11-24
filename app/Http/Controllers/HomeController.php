@@ -16,11 +16,10 @@ class HomeController extends Controller
     public function produk(Request $request){
         $search = $request->input('search');
 
-        $query = Produk::query();
+        $query = Produk::with('gambar_produks');
 
         if ($search) {
-            $query->where('nama_produk', 'like', "%{$search}%")
-                ->orWhere('deskripsi', 'like', "%{$search}%");
+            $query->where('nama_produk', 'like', "%{$search}%");
         }
 
         $data['produk'] = $query->get();

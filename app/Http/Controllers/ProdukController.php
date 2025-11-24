@@ -7,6 +7,7 @@ use App\Models\Kategori;
 use App\Models\Produk;
 use App\Models\Toko;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
@@ -43,7 +44,7 @@ class ProdukController extends Controller
     $namaFile = null;
     if ($request->hasFile('gambar')) {
         $namaFile = time() . '.' . $request->gambar->extension();
-        $request->gambar->move(public_path('public/foto-produk'), $namaFile);
+        $request->gambar->move(public_path('storage/foto-produk'), $namaFile);
 
         Gambar_produk::create([
             'id_produks' => $produk->id,
@@ -92,7 +93,7 @@ class ProdukController extends Controller
         // === SIMPAN GAMBAR BARU ===
         if ($request->hasFile('gambar')) {
         $namaFile = time() . '.' . $request->gambar->extension();
-        $request->gambar->move(public_path('public/foto-produk'), $namaFile);
+        $request->gambar->move(public_path('storage/foto-produk'), $namaFile);
 
         Gambar_produk::create([
             'id_produks' => $produk->id,
@@ -113,7 +114,43 @@ class ProdukController extends Controller
     }
 
     public function detailP($id){
-        $produk = Produk::findOrFail($id);
+        $produk = Produk::with('gambar_produks')->findOrFail($id);
         return view('member.produk-detail', compact('produk'));
     }
+
+
+    public function storeP(Request $request){
+        $request->validate([
+            'nama_produk' => 'required',
+            'harga' => 'required|numeric',
+            'stok' => 'required|numeric',
+            'deskripsi' => 'required',
+            'gambar.*' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'id_kategoris' => 'required',
+        ]);
+
+        $produk = Produk::create([
+            'nama_produk' => $request->nama_produk,
+            'harga' => $request->harga,
+            'stok' => $request->stok,
+            'deskripsi' => $request->deskripsi,
+            'id_tokos' => Toko::where('id_users', auth()->id())->first()->id,
+            'id_kategoris' => $request->id_kategoris,
+            'tanggal_upload' => now(),
+        ]);
+
+        if($request->hasFile('gambar')){
+            foreach($request->file('gambar') as $file){
+                $namaFile = $file->store('foto-produk', 'public');
+
+                Gambar_produk::create([
+                    'id_produks' => $produk->id,
+                    'nama_gambar' => str_replace('foto-produk/','',$namaFile),
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success','Produk berhasil ditambahkan!');
+    }
+
 }

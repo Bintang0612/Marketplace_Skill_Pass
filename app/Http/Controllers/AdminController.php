@@ -77,8 +77,6 @@ class AdminController extends Controller
         Gambar_produk::whereHas('produk', function ($query) use ($id) {
             $query->where('id_tokos', $id);
         });
-        Produk::where('id_tokos', $id)->delete();
-        Toko::where('id_users', $id)->delete();
         User::find($id)->delete();
         return redirect()->back()->with('success', 'data berhasil dihapus');
     }

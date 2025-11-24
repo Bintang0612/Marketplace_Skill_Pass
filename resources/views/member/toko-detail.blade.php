@@ -9,11 +9,14 @@
 
             {{-- FOTO TOKO --}}
             <div class="col-md-5">
-                <img src="{{ asset('storage/foto-toko/' . $toko->gambar) }}"
-                     class="img-fluid rounded-start"
-                     style="height: 100%; object-fit: cover;"
-                     alt="Foto Toko">
+                <div style="max-height: 320px; overflow: hidden; border-radius: 8px;">
+                    <img src="{{ asset('storage/foto-toko/' . $toko->gambar) }}"
+                        class="img-fluid w-100"
+                        style="height: 100%; object-fit: cover;"
+                        alt="Foto Toko">
+                </div>
             </div>
+
 
             {{-- INFORMASI TOKO --}}
             <div class="col-md-7">
@@ -25,7 +28,7 @@
                     <p class="mt-2"><strong>Alamat:</strong> {{ $toko->alamat }}</p>
                     <p><strong>Kontak:</strong> {{ $toko->kontak_toko }}</p>
 
-                    <a href="{{ route('toko') }}" class="btn btn-secondary mt-4">
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary mt-4">
                         Kembali
                     </a>
                 </div>
@@ -39,15 +42,16 @@
 
     <div class="row">
 
-        @forelse ($toko->produk as $item)
+        @forelse ($toko->produk ?? [] as $item)
         <div class="col-12 col-md-6 col-lg-3 d-flex mb-4">
             <div class="card h-100 shadow-sm">
 
                 {{-- GAMBAR PRODUK --}}
                 @foreach ($item->gambar_produks as $g)
-                    <img src="{{ asset('public/foto-produk/' . $g->nama_gambar) }}"
+                    <img src="{{ asset('storage/foto-produk/'.optional($item->gambar_produks->first())->nama_gambar) }}"
                     style="width: 100%; height: 300px; object-fit:cover; border-radius: 5px;">
                 @endforeach
+
 
                 <div class="card-body text-center">
 
