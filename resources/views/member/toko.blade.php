@@ -1,7 +1,7 @@
 @extends('member.template')
 @section('content')
 <div class="container py-5 text-center">
-    <h2 class="text-black bg-success py-3">Daftar Toko</h2>
+    <h2 class="text-black">Daftar Toko</h2>
     <hr>
 
     <div class="row mt-4 justify-content-center">

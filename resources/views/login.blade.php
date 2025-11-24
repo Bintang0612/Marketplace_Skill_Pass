@@ -18,7 +18,7 @@
 
     .card {
       background: #fff;
-      width: 350px;
+      width: 400px;
       border-radius: 12px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       overflow: hidden;
@@ -83,6 +83,26 @@
     .btn:hover {
       background: #0056d6;
     }
+    .btn-register {
+        display: block;
+        margin-top: 12px;
+        padding: 12px;
+        width: 93%;
+        background: transparent;
+        border: 2px solid #2d7dff;
+        color: #2d7dff;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: bold;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .btn-register:hover {
+        background: #2d7dff;
+        color: white;
+    }
+
   </style>
 </head>
 <body>
@@ -93,19 +113,16 @@
     <div class="card-body">
       <h2>Login</h2>
 
-      @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-      @endif
+    @if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    @if(session('error'))
+    <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
 
       <form action="{{ route('login.auth') }}" method="POST">
         @csrf
-        <div class="mb-3 mt-3" style="text-align: left">
+        <div class="mb-3 mt-5" style="text-align: left">
             <label for="username">Username</label>
             <input type="username" class="form-input" id="username" placeholder="Enter Username" name="username">
         </div>
@@ -114,8 +131,12 @@
             <input type="password" class="form-input" id="password" placeholder="Enter Password" name="password">
         </div>
             <button type="submit" class="btn">Login</button>
-        </div>
       </form>
+        <!-- BUTTON DAFTAR -->
+        <a href="{{ route('regist') }}" class="btn-register">
+            Daftar Akun
+        </a>
+        </div>
     </div>
   </div>
 </body>

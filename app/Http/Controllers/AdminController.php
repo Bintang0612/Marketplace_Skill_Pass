@@ -27,9 +27,9 @@ class AdminController extends Controller
         return view('admin.users', $data);
     }
     public function usersP(Request $request){
-            $request->validate([
+            $validate = $request->validate([
             'nama' => 'required|string',
-            'kontak' => 'required|numeric|max:13',
+            'kontak' => 'required|numeric',
             'username' => 'required|string',
             'password' => 'required',
             'role' => 'required',
@@ -37,13 +37,13 @@ class AdminController extends Controller
         $request['password'] = bcrypt($request['password']);
 
         User::create([
-            'nama' => $request->nama,
-            'kontak' => $request->kontak,
-            'username' => $request->username,
-            'password' => $request->password,
-            'role' => $request->role,
+            'nama' => $validate['nama'],
+            'kontak' => $validate['kontak'],
+            'username' => $validate['username'],
+            'password' => bcrypt($validate['password']),
+            'role' => $validate['role'],
         ]);
-        return redirect()->route('admin.users')->with('success', 'tambah user berhasil');
+        return redirect()->back()->with('success', 'tambah user berhasil');
     }
     public function usersU(Request $request, string $id){
         try{

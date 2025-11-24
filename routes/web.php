@@ -45,6 +45,9 @@ Route::get('/toko/{id}', [TokoController::class, 'detailT'])->name('toko.detail'
 Route::get('/produk', [HomeController::class, 'produk'])->name('produk');
 Route::get('/produk/{id}', [ProdukController::class, 'detailP'])->name('produk.detail');
 
+Route::get('/regist', [UserController::class, 'regist'])->name('regist');
+Route::post('/registrasi', [UserController::class, 'registrasi'])->name('registrasi.store');
+
 Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/login/auth', [UserController::class, 'auth'])->name('login.auth');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');

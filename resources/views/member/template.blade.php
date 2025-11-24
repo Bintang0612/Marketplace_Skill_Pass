@@ -78,6 +78,22 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('toko') }}">Toko</a></li>
                 </ul>
 
+                <!-- Search -->
+                <form class="d-flex me-3" action="{{ route('produk') }}" method="GET">
+                    <input
+                        class="form-control"
+                        type="search"
+                        name="search"
+                        placeholder="Cari produk..."
+                        style="width: 220px;"
+                        value="{{ request('search') }}"
+                    >
+                    <button class="btn btn-outline-primary ms-2" type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+
+
                 <!-- User -->
                 <div class="d-flex align-items-center">
 
@@ -101,6 +117,8 @@
                         @else
                         <a class="btn btn-primary px-4 py-2" style="font-size: 18px;"
                         href="{{ route('login') }}">Login</a>
+                        <a class="btn btn-secondary px-4 py-2 ms-2" style="font-size: 18px;"
+                        href="{{ route('regist') }}">Daftar</a>
                         @endif
 
                     </div>
@@ -108,9 +126,6 @@
                 </div>
 
             </div>
-            {{-- <div id="menu" class="collapse w-75 ">
-                <a href="{{ route('logout') }}" class="btn btn-danger w-100">Logout</a>
-            </div> --}}
     </nav>
 
     <!-- CONTENT -->
