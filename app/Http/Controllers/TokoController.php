@@ -111,7 +111,8 @@ class TokoController extends Controller
     public function tokoSaya(){
         $toko = Toko::where('id_users', Auth::id())->with('produk.gambar_produks')->first();
         $kategori = Kategori::all();
-        return view('member.toko.toko-saya', compact('toko', 'kategori'));
+        $produk = $toko->produk;
+        return view('member.toko.toko-saya', compact('toko', 'kategori', 'produk'));
     }
 
     public function store(Request $request)
@@ -186,11 +187,6 @@ class TokoController extends Controller
         return redirect()->back()->with('success', 'Toko berhasil diperbarui.');
     }
     public function deleteT($id){
-       try{
-            $id = Crypt::decrypt($id);
-        } catch (DecryptException $e){
-            return redirect()->back();
-        }
         Toko::where('id', $id)->delete();
         return redirect()->back()->with('error', 'Toko berhasil dihapus');
     }

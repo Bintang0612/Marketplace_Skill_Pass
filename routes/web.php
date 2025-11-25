@@ -42,6 +42,7 @@ Route::middleware(['member'])->group(function(){
     Route::post('/produk/store', [ProdukController::class, 'storeP'])->name('produk.buat');
     Route::post('/produk/update/{id}', [ProdukController::class, 'updateP'])->name('produk.edit');
     Route::get('/produk/delete/{id}', [ProdukController::class, 'deleteP'])->name('produk.destroy');
+    Route::post('/produk/gambar/tambah/{id}', [ProdukController::class, 'tambahGambar'])->name('tambah.gambar');
 });
 
 Route::get('/',[HomeController::class, 'index'])->name('home');

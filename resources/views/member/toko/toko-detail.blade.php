@@ -43,34 +43,28 @@
     <div class="row">
 
         @forelse ($toko->produk ?? [] as $item)
-        <div class="col-12 col-md-6 col-lg-3 d-flex mb-4">
-            <div class="card h-100 shadow-sm">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card shadow-sm h-100">
+                    <!-- Foto Produk -->
+                    @php
+                    $gambar = $item->gambar_produks->first();
+                    @endphp
+                    <div style="width: 100%; height: 180px; overflow: hidden;">
+                        <img src="{{ $gambar ? asset('storage/foto-produk/'.$gambar->nama_gambar) : asset('noimage.png') }}"
+                        class="w-100 h-100" style="object-fit: cover;">
+                    </div>
 
-                {{-- GAMBAR PRODUK --}}
-                @foreach ($item->gambar_produks as $g)
-                    <img src="{{ asset('storage/foto-produk/'.optional($item->gambar_produks->first())->nama_gambar) }}"
-                    style="width: 100%; height: 300px; object-fit:cover; border-radius: 5px;">
-                @endforeach
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $item->nama_produk }}</h5>
+                        <p class="text-teal fw-bold fs-5">
+                            Rp {{ number_format($item->harga, 0, ',', '.') }}
+                        </p>
+                        <p class="text-muted mb-2">Stok: {{ $item->stok }}</p>
+                        <a href="{{ route('produk.detail', $item->id) }}" class="btn btn-primary w-100">Lihat Detail</a>
+                    </div>
 
-
-                <div class="card-body text-center">
-
-                    <h5 class="card-title">{{ $item->nama_produk }}</h5>
-
-                    <p class="text-success fw-bold">
-                        Rp {{ number_format($item->harga, 0, ',', '.') }}
-                    </p>
-
-                    <p class="text-muted">Stok: {{ $item->stok }}</p>
-
-                    <a href="{{ route('produk.detail', $item->id) }}"
-                       class="btn btn-primary w-100 mt-2">
-                        Lihat Detail Produk
-                    </a>
                 </div>
-
             </div>
-        </div>
         @empty
             <p class="text-muted">Belum ada produk yang dijual oleh toko ini.</p>
         @endforelse

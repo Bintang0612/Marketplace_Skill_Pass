@@ -163,7 +163,6 @@ class ProdukController extends Controller
             'deskripsi' => 'required',
             'harga' => 'required|integer',
             'stok' => 'required|integer',
-            'gambar.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
         ]);
 
         $produk->update([
@@ -174,30 +173,6 @@ class ProdukController extends Controller
             'harga' => $request->harga,
             'stok' => $request->stok,
         ]);
-
-        // === HAPUS GAMBAR LAMA ===
-        if ($request->hasFile('gambar')) {
-
-            $gambarLama = Gambar_produk::where('id_produks', $produk->id)->get();
-
-            foreach ($gambarLama as $gmbr) {
-                if (file_exists(storage_path('app/' . $gmbr->nama_gambar))) {
-                    unlink(storage_path('app/' . $gmbr->nama_gambar));
-                }
-                $gmbr->delete();
-            }
-
-            // === SIMPAN GAMBAR BARU ===
-            if ($request->hasFile('gambar')) {
-            $namaFile = time() . '.' . $request->gambar->extension();
-            $request->gambar->move(public_path('storage/foto-produk'), $namaFile);
-
-            Gambar_produk::create([
-                'id_produks' => $produk->id,
-                'nama_gambar' => $namaFile,
-            ]);
-        }
-        }
         return back()->with('success', 'Produk berhasil diperbarui!');
     }
     public function deleteP($id)
@@ -218,5 +193,26 @@ class ProdukController extends Controller
 
         return back()->with('success', 'Produk dan gambarnya berhasil dihapus!');
     }
+    public function tambahGambar(Request $request, $id)
+    {
+        $request->validate([
+            'gambar_produk.*' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
 
+        $produk = Produk::findOrFail($id);
+
+        if ($request->hasFile('gambar_produk')) {
+            foreach ($request->file('gambar_produk') as $file) {
+                $namaFile = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('storage/foto-produk'), $namaFile);
+
+                Gambar_produk::create([
+                    'id_produks' => $produk->id,
+                    'nama_gambar' => $namaFile,
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Gambar produk berhasil ditambahkan!');
+    }
 }

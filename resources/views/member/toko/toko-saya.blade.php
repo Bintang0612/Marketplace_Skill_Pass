@@ -90,14 +90,16 @@
                     <p><strong>Alamat:</strong> {{ $toko->alamat }}</p>
                     <p><strong>Kontak:</strong> {{ $toko->kontak_toko }}</p>
 
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editTokoModal">
-                        Edit Toko
-                    </button>
+                    <div class="d-flex gap-3">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editTokoModal">
+                            Edit Toko
+                        </button>
 
-                    <form action="{{ route('produk.destroy', $toko->id) }}" method="GET" class="w-15"
-                        onsubmit="return confirm('Yakin ingin menghapus Toko Anda?');">
-                        <button class="btn btn-danger w-15">Hapus</button>
-                    </form>
+                        <form action="{{ route('produk.destroy', $toko->id) }}" method="GET" class="w-15"
+                            onsubmit="return confirm('Yakin ingin menghapus Toko Anda?');">
+                            <button class="btn btn-danger w-15">Hapus</button>
+                        </form>
+                    </div>
                 </div>
 
             </div>
@@ -144,6 +146,9 @@
                                     onsubmit="return confirm('Yakin ingin menghapus produk ini?');">
                                     <button class="btn btn-danger w-100">Hapus</button>
                                 </form>
+                            </div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#addGambar{{ $item->id }}">Tambah Gambar</button>
                             </div>
                         </div>
                     </div>
@@ -195,14 +200,6 @@
                             <textarea name="deskripsi" class="form-control" rows="3">{{ $item->deskripsi }}</textarea>
                         </div>
 
-                        <div class="mb-3">
-                            <label>Gambar (opsional)</label>
-                            <input type="file" name="gambar" class="form-control">
-                            <small class="text-muted">Biarkan kosong jika tidak ingin mengganti gambar</small>
-                        </div>
-
-                        </div>
-
                         <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -216,6 +213,30 @@
             <p class="text-muted">Belum ada produk.</p>
             @endforelse
         </div>
+        {{-- MODAL TAMBAH GAMBAR PRODUK --}}
+        @foreach($produk as $p)
+            <div class="modal fade" id="addGambar{{ $p->id }}" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <form action="{{ route('tambah.gambar', $p->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title">Tambah Gambar Produk {{ $p->nama_produk }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="file" name="gambar_produk[]" class="form-control" multiple required>
+                        <small class="text-muted">Bisa upload lebih dari 1 gambar.</small>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+            </div>
+            @endforeach
 
         {{-- MODAL EDIT TOKO --}}
         <div class="modal fade" id="editTokoModal" tabindex="-1" aria-labelledby="editTokoLabel" aria-hidden="true">
