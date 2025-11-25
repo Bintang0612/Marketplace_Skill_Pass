@@ -36,7 +36,7 @@
 <!-- PRODUK TERBARU -->
 <div class="container py-5 text-center">
     <h2 class="text-teal mb-4 py-3">Produk Terbaru</h2>
-
+    <hr>
     <div class="container pb-5">
         <div class="row g-4">
 
@@ -68,5 +68,41 @@
         </div>
     </div>
 </div>
+
+<!-- DAFTAR TOKO -->
+<div class="container py-5 text-center">
+    <h2 class="text-teal mb-4 py-3">Daftar Toko</h2>
+    <hr>
+    <div class="row g-4">
+
+        @foreach ($toko as $item)
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card shadow-sm h-100">
+
+                    {{-- Foto Toko --}}
+                    <div style="width: 100%; height: 180px; overflow: hidden;">
+                        <img src="{{ $item->gambar ? asset('storage/foto-toko/'.$item->gambar) : asset('noimage.png') }}"
+                             class="w-100 h-100" style="object-fit: cover;">
+                    </div>
+                    <div class="card-body">
+                    <h5 class="card-title">{{ $item->nama_toko }}</h5>
+
+                    <p class="text-muted" style="font-size: 14px;">
+                        {{ Str::limit($item->deskripsi, 60) }}
+                    </p>
+                    <p class="fw-bold mb-1">Kontak: {{ $item->kontak_toko }}</p>
+                    <p class="text-muted mb-2">Alamat: {{ $item->alamat }}</p>
+
+                        <a href="{{ route('toko.detail', $item->id) }}" class="btn btn-success w-100">
+                            Kunjungi Toko
+                        </a>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+
+    </div>
+</div>
+
 
 @endsection

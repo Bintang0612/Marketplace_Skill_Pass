@@ -56,9 +56,12 @@
                             <hr>
 
                             <div class="mt-4 d-flex gap-3">
-                                <a href="#" class="btn btn-primary w-100">
-                                    Pesan Via Whatsapp
+                                <a href="https://wa.me/{{ $produk->toko->kontak_toko }}?text=Halo%20saya%20tertarik%20dengan%20produk%20{{ urlencode($produk->nama_produk) }}"
+                                target="_blank"
+                                class="btn btn-success w-100">
+                                    Pesan Via WhatsApp
                                 </a>
+
 
                                 <a href="{{ url()->previous() }}"
                                    class="btn btn-secondary w-100">

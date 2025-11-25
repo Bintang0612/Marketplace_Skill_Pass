@@ -11,7 +11,8 @@ class HomeController extends Controller
     //
     public function index(){
        $produks = Produk::latest()->take(8)->get();
-        return view('member.home', compact('produks'));
+       $toko = Toko::take(4)->get();
+        return view('member.home', compact('produks', 'toko'));
     }
     public function produk(Request $request){
         $search = $request->input('search');
@@ -24,11 +25,11 @@ class HomeController extends Controller
 
         $data['produk'] = $query->get();
 
-        return view('member.produk', $data);
+        return view('member.produk.produk', $data);
     }
 
     public function toko(){
         $data['toko'] = Toko::all();
-        return view('member.toko', $data);
+        return view('member.toko.toko', $data);
     }
 }

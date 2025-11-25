@@ -36,9 +36,12 @@ Route::middleware(['admin'])->group(function () {
 Route::middleware(['member'])->group(function(){
     Route::get('/toko-saya/{id}', [TokoController::class, 'tokoSaya'])->name('toko.saya');
     Route::post('/toko/buat', [TokoController::class, 'store'])->name('toko.buat');
-    Route::post('/toko/update/{id}', [TokoController::class, 'update'])->name('toko.update');
+    Route::post('/toko/update/{id}', [TokoController::class, 'update'])->name('toko.edit');
+    Route::get('/toko/delete/{id}', [TokoController::class, 'deleteT'])->name('toko.destroy');
 
     Route::post('/produk/store', [ProdukController::class, 'storeP'])->name('produk.buat');
+    Route::post('/produk/update/{id}', [ProdukController::class, 'updateP'])->name('produk.edit');
+    Route::get('/produk/delete/{id}', [ProdukController::class, 'deleteP'])->name('produk.destroy');
 });
 
 Route::get('/',[HomeController::class, 'index'])->name('home');

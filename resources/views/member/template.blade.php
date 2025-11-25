@@ -7,7 +7,9 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('bootstrap1/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('fontawesome-free-6.7.2-web/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('fontawesome-free-6.7.2-web/css/all.min.css') }}">\
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
 
     <style>
         body {
@@ -52,6 +54,9 @@
         .dropdown {
             position: relative;
             z-index: 99999;
+        }
+        .hover-link:hover {
+        color: #20c997 !important; /* teal */
         }
     </style>
 </head>
@@ -134,46 +139,71 @@
     </div>
 
     <!-- FOOTER -->
-    <footer class="bg-dark text-light pt-4 mt-5">
-        <div class="container">
-            <div class="row">
+    <footer style="background: #0d9488;" class="text-white pt-5 mt-5"
+            class="bg-dark text-light pt-5 mt-5">
+    <div class="container">
 
-                <!-- About -->
-                <div class="col-md-4 mb-3">
-                    <h5>About Us</h5>
-                    <p>Website marketplace modern dan mudah digunakan.</p>
+        <div class="row gy-4">
+
+            <!-- Brand -->
+            <div class="col-md-4">
+                <h4 class="fw-bold text-teal">Marketplace</h4>
+                <p class="text-dark">
+                    Platform marketplace modern untuk jual beli produk terbaik dengan mudah dan cepat.
+                </p>
+
+                <!-- Sosial Media -->
+                <div class="d-flex gap-3 mt-3">
+                    <a href="#" class="text-light fs-4"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-light fs-4"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-light fs-4"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-light fs-4"><i class="bi bi-youtube"></i></a>
                 </div>
-
-                <!-- Links -->
-                <div class="col-md-4 mb-3">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-light text-decoration-none">Beranda</a></li>
-                        <li><a href="#" class="text-light text-decoration-none">Produk</a></li>
-                        <li><a href="#" class="text-light text-decoration-none">Kategori</a></li>
-                        <li><a href="#" class="text-light text-decoration-none">Toko</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact -->
-                <div class="col-md-4 mb-3">
-                    <h5>Contact</h5>
-                    <p>
-                        📍 Jl. Lapang Bola No. 117, Tasikmalaya<br>
-                        📞 0265-545483<br>
-                        ✉️ Marketplace@yahoo.co.id
-                    </p>
-                </div>
-
             </div>
 
-            <div class="text-center py-3 border-top border-secondary mt-3">
-                <small>© 2025 Marketplace. All rights reserved.</small>
+            <!-- Navigation -->
+            <div class="col-md-4">
+                <h5 class="fw-semibold mb-3">Navigasi</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a href="{{ route('home') }}" class="text-light text-decoration-none hover-link">Beranda</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="{{ route('produk') }}" class="text-light text-decoration-none hover-link">Produk</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="{{ route('toko') }}" class="text-light text-decoration-none hover-link">Toko</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="col-md-4">
+                <h5 class="fw-semibold mb-3">Kontak Kami</h5>
+                <p class="text-dark mb-1">
+                    <i class="bi bi-geo-alt-fill me-2"></i>
+                    Jl. Lapang Bola No. 117, Tasikmalaya
+                </p>
+                <p class="text-dark mb-1">
+                    <i class="bi bi-telephone-fill me-2"></i>
+                    0265-545483
+                </p>
+                <p class="text-dark">
+                    <i class="bi bi-envelope-fill me-2"></i>
+                    Marketplace@yahoo.co.id
+                </p>
             </div>
 
         </div>
-    </footer>
 
+        <hr class="border-dark mt-4">
+
+        <div class="text-center py-3">
+            <small class="text-dark">© 2025 Marketplace. All rights reserved.</small>
+        </div>
+
+    </div>
+</footer>
     <!-- JS -->
     <script src="{{ asset('bootstrap1/js/bootstrap.bundle.min.js') }}"></script>
 </body>

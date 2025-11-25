@@ -30,5 +30,11 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345'),
             'role' => 'member',
         ]);
+        Kategori::create([
+            'nama_kategori' => 'makanan',
+        ]);
+        Kategori::create([
+            'nama_kategori' => 'minuman',
+        ]);
     }
 }

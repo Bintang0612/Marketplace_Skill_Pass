@@ -115,7 +115,8 @@ class ProdukController extends Controller
 
     public function detailP($id){
         $produk = Produk::with('gambar_produks')->findOrFail($id);
-        return view('member.produk-detail', compact('produk'));
+        $toko = Toko::all();
+        return view('member.produk.produk-detail', compact('produk', 'toko'));
     }
 
 
@@ -151,6 +152,71 @@ class ProdukController extends Controller
         }
 
         return redirect()->back()->with('success','Produk berhasil ditambahkan!');
+    }
+
+    public function updateP(Request $request, $id){
+        $produk = Produk::findOrFail($id);
+
+        $request->validate([
+            'id_kategoris' => 'required',
+            'nama_produk' => 'required|max:50',
+            'deskripsi' => 'required',
+            'harga' => 'required|integer',
+            'stok' => 'required|integer',
+            'gambar.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+        ]);
+
+        $produk->update([
+            'id_kategoris' => $request->id_kategoris,
+            'id_tokos' => Auth::user()->toko->id,
+            'nama_produk' => $request->nama_produk,
+            'deskripsi' => $request->deskripsi,
+            'harga' => $request->harga,
+            'stok' => $request->stok,
+        ]);
+
+        // === HAPUS GAMBAR LAMA ===
+        if ($request->hasFile('gambar')) {
+
+            $gambarLama = Gambar_produk::where('id_produks', $produk->id)->get();
+
+            foreach ($gambarLama as $gmbr) {
+                if (file_exists(storage_path('app/' . $gmbr->nama_gambar))) {
+                    unlink(storage_path('app/' . $gmbr->nama_gambar));
+                }
+                $gmbr->delete();
+            }
+
+            // === SIMPAN GAMBAR BARU ===
+            if ($request->hasFile('gambar')) {
+            $namaFile = time() . '.' . $request->gambar->extension();
+            $request->gambar->move(public_path('storage/foto-produk'), $namaFile);
+
+            Gambar_produk::create([
+                'id_produks' => $produk->id,
+                'nama_gambar' => $namaFile,
+            ]);
+        }
+        }
+        return back()->with('success', 'Produk berhasil diperbarui!');
+    }
+    public function deleteP($id)
+    {
+        $produk = Produk::findOrFail($id);
+
+        // Hapus gambar terkait
+        $gambarProduk = Gambar_produk::where('id_produks', $produk->id)->get();
+        foreach ($gambarProduk as $gmbr) {
+            $filePath = public_path('storage/foto-produk/' . $gmbr->nama_gambar);
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+            $gmbr->delete();
+        }
+        // Hapus produk
+        $produk->delete();
+
+        return back()->with('success', 'Produk dan gambarnya berhasil dihapus!');
     }
 
 }

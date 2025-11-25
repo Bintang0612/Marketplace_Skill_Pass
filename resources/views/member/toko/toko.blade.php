@@ -31,9 +31,8 @@
                     <p class="text-muted mb-2">Alamat: {{ $item->alamat }}</p>
 
                     {{-- DETAIL --}}
-                    <a href="{{ route('toko.detail', $item->id) }}"
-                       class="btn btn-primary w-100">
-                        Lihat Detail
+                    <a href="{{ route('toko.detail', $item->id) }}" class="btn btn-success w-100">
+                        Kunjungi Toko
                     </a>
                 </div>
             </div>
