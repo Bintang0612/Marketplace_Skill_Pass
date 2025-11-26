@@ -18,6 +18,7 @@
             </div>
         </div>
     </form>
+    <hr>
 
     <div class="row mt-4 justify-content-center">
         @foreach ($produk as $item)

@@ -3,8 +3,12 @@
 @section('content')
 <div class="container py-5">
 
+    <a href="{{ url()->previous() }}" class="btn btn-secondary mt-2">
+        Kembali
+    </a>
+
     {{-- HEADER TOKO --}}
-    <div class="card shadow-lg mb-4">
+    <div class="card shadow-lg mb-4 mt-4">
         <div class="row g-0">
 
             {{-- FOTO TOKO --}}
@@ -22,15 +26,9 @@
             <div class="col-md-7">
                 <div class="card-body">
                     <h2 class="fw-bold">Nama Toko : {{ $toko->nama_toko }}</h2>
-
                     <p class="mt-3">Deskripsi : {{ $toko->deskripsi }}</p>
-
                     <p class="mt-2"><strong>Alamat:</strong> {{ $toko->alamat }}</p>
                     <p><strong>Kontak:</strong> {{ $toko->kontak_toko }}</p>
-
-                    <a href="{{ url()->previous() }}" class="btn btn-secondary mt-4">
-                        Kembali
-                    </a>
                 </div>
             </div>
 
