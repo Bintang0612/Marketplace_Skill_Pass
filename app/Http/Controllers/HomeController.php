@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use App\Models\Produk;
 use App\Models\Toko;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ class HomeController extends Controller
     }
     public function produk(Request $request){
         $search = $request->input('search');
+        $kategoriId = $request->input('kategori');
 
         $query = Produk::with('gambar_produks');
 
@@ -23,7 +25,13 @@ class HomeController extends Controller
             $query->where('nama_produk', 'like', "%{$search}%");
         }
 
+        // FILTER KATEGORI
+        if ($kategoriId) {
+            $query->where('id_kategoris', $kategoriId);
+        }
+
         $data['produk'] = $query->get();
+        $data['kategori'] = Kategori::all();
 
         return view('member.produk.produk', $data);
     }

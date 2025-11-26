@@ -41,7 +41,7 @@
         <div class="row g-4">
 
             @foreach ($produks as $produk)
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-lg-start">
                     <div class="card shadow-sm h-100">
                         <!-- Foto Produk -->
                         @php
@@ -58,7 +58,7 @@
                                 Rp {{ number_format($produk->harga, 0, ',', '.') }}
                             </p>
                             <p class="text-muted mb-2">Stok: {{ $produk->stok }}</p>
-                            <a href="{{ route('produk.detail', $produk->id) }}" class="btn btn-primary w-100">Lihat Detail</a>
+                            <a href="{{ route('produk.detail', $produk->id) }}" class="btn btn-primary w-100">Lihat Detail Produk</a>
                         </div>
 
                     </div>
@@ -76,7 +76,7 @@
     <div class="row g-4">
 
         @foreach ($toko as $item)
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-lg-start">
                 <div class="card shadow-sm h-100">
 
                     {{-- Foto Toko --}}

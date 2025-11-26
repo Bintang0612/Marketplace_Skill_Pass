@@ -3,6 +3,22 @@
 <div class="container py-5 text-center">
     <h2 class="text-black">Daftar Produk</h2>
     <hr>
+    {{-- FILTER KATEGORI --}}
+    <form action="" method="GET" class="mb-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-4">
+                <select name="kategori" class="form-select" onchange="this.form.submit()">
+                    <option value="">Semua Kategori</option>
+                    @foreach ($kategori as $kat)
+                    <option value="{{ $kat->id }}" {{ request('kategori') == $kat->id ? 'selected' : '' }}>
+                        {{ $kat->nama_kategori }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </form>
+
     <div class="row mt-4 justify-content-center">
         @foreach ($produk as $item)
         <div class="col-12 col-mb-6 col-lg-3 d-flex gap-3">

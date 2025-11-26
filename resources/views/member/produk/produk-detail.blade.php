@@ -54,6 +54,10 @@
                             </p>
 
                             <hr>
+                            <h5 class="fw-bold">Toko</h5>
+                            <p class="mt-2" style="font-size: 15px;">
+                                {{ $produk->toko->nama_toko }}
+                            </p>
 
                             <div class="mt-4 d-flex gap-3">
                                 <a href="https://wa.me/{{ $produk->toko->kontak_toko }}?text=Halo%20saya%20tertarik%20dengan%20produk%20{{ urlencode($produk->nama_produk) }}"

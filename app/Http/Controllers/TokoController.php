@@ -111,7 +111,8 @@ class TokoController extends Controller
     public function tokoSaya(){
         $toko = Toko::where('id_users', Auth::id())->with('produk.gambar_produks')->first();
         $kategori = Kategori::all();
-        $produk = $toko->produk;
+        $produk = $toko->produk ?? collect();
+
         return view('member.toko.toko-saya', compact('toko', 'kategori', 'produk'));
     }
 

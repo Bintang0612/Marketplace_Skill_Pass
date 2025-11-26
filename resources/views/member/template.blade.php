@@ -14,15 +14,23 @@
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
+            padding-top: 70px;
         }
 
         /* Navbar */
         .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+
             padding: 0.8rem 0;
             background: rgba(255, 255, 255, 0.85) !important;
             backdrop-filter: blur(6px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
+
         .navbar-brand {
             font-size: 28px;
             font-weight: 800;

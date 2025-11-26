@@ -97,7 +97,7 @@
 
                         <form action="{{ route('produk.destroy', $toko->id) }}" method="GET" class="w-15"
                             onsubmit="return confirm('Yakin ingin menghapus Toko Anda?');">
-                            <button class="btn btn-danger w-15">Hapus</button>
+                            <button class="btn btn-danger w-15">Hapus Toko</button>
                         </form>
                     </div>
                 </div>
