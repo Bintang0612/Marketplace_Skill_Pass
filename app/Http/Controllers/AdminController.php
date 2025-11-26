@@ -68,12 +68,6 @@ class AdminController extends Controller
         return redirect()->route('admin.users')->with('success', 'data berhasil di edit');
     }
     public function usersD(string $id){
-        try{
-            $id = Crypt::decrypt($id);
-        } catch (DecryptException $e){
-            return redirect()->back();
-        }
-
         Gambar_produk::whereHas('produk', function ($query) use ($id) {
             $query->where('id_tokos', $id);
         });

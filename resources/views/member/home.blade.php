@@ -14,7 +14,6 @@
     }
 </style>
 
-<!-- HERO -->
 <div class="container-fluid">
     <div class="container">
         <div class="row">
@@ -76,14 +75,17 @@
     <div class="row g-4">
 
         @foreach ($toko as $item)
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-lg-start">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card shadow-sm h-100">
 
                     {{-- Foto Toko --}}
-                    <div style="width: 100%; height: 180px; overflow: hidden;">
-                        <img src="{{ $item->gambar ? asset('storage/foto-toko/'.$item->gambar) : asset('noimage.png') }}"
-                             class="w-100 h-100" style="object-fit: cover;">
+                    <div class="d-flex justify-content-center mt-3">
+                        <div style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden;">
+                            <img src="{{ $item->gambar ? asset('storage/foto-toko/'.$item->gambar) : asset('noimage.png') }}"
+                                class="w-100 h-100" style="object-fit: cover;">
+                        </div>
                     </div>
+
                     <div class="card-body">
                     <h5 class="card-title">{{ $item->nama_toko }}</h5>
 

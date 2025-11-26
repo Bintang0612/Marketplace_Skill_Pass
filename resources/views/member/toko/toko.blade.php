@@ -11,9 +11,13 @@
             <div class="card h-100 shadow-sm border-2" style="width: 400px">
 
                 {{-- GAMBAR TOKO --}}
-                <img src="{{ asset('storage/foto-toko/'.$item->gambar) }}"
-                     alt="Gambar Toko"
-                     style="height: 200px; object-fit: cover; border-radius: 5px;">
+                <div class="d-flex justify-content-center mt-3">
+                    <div style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden;">
+                        <img src="{{ $item->gambar ? asset('storage/foto-toko/'.$item->gambar) : asset('noimage.png') }}"
+                            class="w-100 h-100" style="object-fit: cover;">
+                    </div>
+                </div>
+
                 <div class="card-body">
 
                     {{-- NAMA TOKO --}}
